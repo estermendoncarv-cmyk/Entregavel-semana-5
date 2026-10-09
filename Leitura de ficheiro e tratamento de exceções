@@ -1,0 +1,47 @@
+# 3. Leitura de dados e tratamento de exceções
+def processar_dados(nome_ficheiro):
+    registos_validos = []
+    registos_invalidos = []
+    
+    try:
+        with open(nome_ficheiro, "r", encoding="utf-8") as ficheiro:
+            linhas = ficheiro.readlines()
+            if not linhas:
+                raise ValueError("O ficheiro de dados está vazio.")
+            
+            cabecalho = [col.strip() for col in linhas[0].strip().split(",")]
+            esperado = ["email", "cpf", "telefone", "data"]
+            
+            for campo in esperado:
+                if campo not in cabecalho:
+                    raise KeyError(f"Coluna obrigatória em falta no CSV: {campo}")
+            
+            for i, linha in enumerate(linhas[1:], start=2):
+                dados = [col.strip() for col in linha.strip().split(",")]
+                if len(dados) != 4:
+                    registos_invalidos.append(f"Linha {i}: Inconsistência no número de colunas.")
+                    continue
+                
+                email, cpf, telefone, data = dados
+                
+                try:
+                    validar_email(email)
+                    validar_cpf(cpf)
+                    validar_telefone(telefone)
+                    validar_data(data)
+                    registos_validos.append({"email": email, "cpf": cpf, "telefone": telefone, "data": data})
+                except FormatoInvalidoError as e:
+                    registos_invalidos.append(f"Linha {i}: {e}")
+                    
+    except FileNotFoundError:
+        print(f"Erro: O ficheiro '{nome_ficheiro}' não foi encontrado.")
+    except KeyError as e:
+        print(f"Erro de Estrutura: {e}")
+    except ValueError as e:
+        print(f"Erro de Valor: {e}")
+    else:
+        print("Leitura e processamento do ficheiro executados com sucesso.")
+    finally:
+        print("Operação de fecho/leitura de recursos finalizada.")
+        
+    return registos_validos, registos_invalidos
