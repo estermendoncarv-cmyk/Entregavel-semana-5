@@ -1,4 +1,4 @@
-# 3. Leitura de dados e tratamento de exceções
+
 def processar_dados(nome_ficheiro):
     registos_validos = []
     registos_invalidos = []
