@@ -1,0 +1,30 @@
+
+def gerar_relatorio(validos, invalidos):
+    total = len(validos) + len(invalidos)
+    
+    print("\n" + "="*50)
+    print("             RELATÓRIO DE ANÁLISE DE DADOS")
+    print("="*50)
+    print(f"Total de registos processados: {total}")
+    print(f"Registos válidos: {len(validos)}")
+    print(f"Registos inválidos: {len(invalidos)}")
+    
+    print("\n--- Detalhes dos Registos Inválidos ---")
+    if invalidos:
+        for inv in invalidos:
+            print(f"  • {inv}")
+    else:
+        print("  Nenhum registo inválido encontrado.")
+        
+    print("\n--- Estatísticas de Validação ---")
+    if total > 0:
+        taxa_sucesso = (len(validos) / total) * 100
+        print(f"Taxa de aprovação: {taxa_sucesso:.2f}%")
+    else:
+        print("Taxa de aprovação: 0.00%")
+    print("="*50)
+
+# Bloco de execução principal (exemplo de chamada)
+if __name__ == "__main__":
+    validos, invalidos = processar_dados("dados.csv")
+    gerar_relatorio(validos, invalidos)
