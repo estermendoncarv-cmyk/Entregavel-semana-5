@@ -1,0 +1,55 @@
+
+
+def ler_arquivo_dados(nome_ficheiro):
+    registos = []
+    
+    try:
+        
+        with open(nome_ficheiro, "r", encoding="utf-8") as ficheiro:
+            linhas = ficheiro.readlines()
+            
+            if not linhas:
+                raise ValueError("O ficheiro de dados está vazio.")
+            
+      
+            cabecalho = [col.strip() for col in linhas[0].strip().split(",")]
+            campos_esperados = ["email", "cpf", "telefone", "data"]
+            
+      
+            for campo in campos_esperados:
+                if campo not in cabecalho:
+                    raise KeyError(f"Coluna obrigatória em falta: {campo}")
+            
+  
+            for i, linha in enumerate(linhas[1:], start=2):
+                dados = [col.strip() for col in linha.strip().split(",")]
+                
+                if len(dados) != 4:
+                    print(f"Aviso: Linha {i} possui um número inconsistente de colunas.")
+                    continue
+                
+                email, cpf, telefone, data = dados
+                registos.append({
+                    "email": email,
+                    "cpf": cpf,
+                    "telefone": telefone,
+                    "data": data
+                })
+                
+    except FileNotFoundError:
+        print(f"Erro: O ficheiro '{nome_ficheiro}' não foi encontrado.")
+    except KeyError as e:
+        print(f"Erro de Estrutura: {e}")
+    except ValueError as e:
+        print(f"Erro de Valor: {e}")
+    else:
+        print("Leitura do ficheiro efetuada com sucesso.")
+    finally:
+        print("Processo de leitura de recursos finalizado.")
+        
+    return registos
+
+if __name__ == "__main__":
+    dados_lidos = ler_arquivo_dados("dados.csv")
+    print("\nRegistos carregados:", dados_lidos)
+```[cite: 4]
