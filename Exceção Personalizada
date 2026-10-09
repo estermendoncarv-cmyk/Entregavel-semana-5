@@ -1,0 +1,5 @@
+# 1. Exceção Personalizada
+class FormatoInvalidoError(Exception):
+    """Exceção levantada quando um campo não cumpre o formato de negócio exigido."""
+    def __init__(self, mensagem="O formato do campo é inválido."):
+        super().__init__(mensagem)
