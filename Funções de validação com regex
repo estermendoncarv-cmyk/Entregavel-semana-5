@@ -1,0 +1,26 @@
+
+
+# 2. Validação com Regex 
+def validar_email(email):
+    padrao = r"^[\w\.-]+@[\w\.-]+\.\w+$"
+    if not re.match(padrao, email):
+        raise FormatoInvalidoError(f"E-mail inválido: {email}")
+    return True
+
+def validar_cpf(cpf):
+    padrao = r"^\d{3}\.\d{3}\.\d{3}-\d{2}$"
+    if not re.match(padrao, cpf):
+        raise FormatoInvalidoError(f"CPF inválido: {cpf}")
+    return True
+
+def validar_telefone(telefone):
+    padrao = r"^\(\d{2}\)\s\d{4,5}-\d{4}$"
+    if not re.match(padrao, telefone):
+        raise FormatoInvalidoError(f"Telefone inválido: {telefone}")
+    return True
+
+def validar_data(data):
+    padrao = r"^\d{2}/\d{2}/\d{4}$"
+    if not re.match(padrao, data):
+        raise FormatoInvalidoError(f"Data inválida: {data}")
+    return True
